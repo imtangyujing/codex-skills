@@ -49,6 +49,51 @@ git push
 
 Use this after changing existing skills or adding new ones.
 
+## Git Commands In Plain Words
+
+These are normal Git commands, not custom commands created for this repo.
+
+```bash
+git status
+```
+
+Show what changed locally.
+
+```bash
+git add skills
+```
+
+Put changes inside the `skills/` folder into the next saved version. Think of it as choosing what to include.
+
+```bash
+git commit -m "Update skills"
+```
+
+Save the chosen changes as a local version. The text after `-m` is the note for that version. You can write a clearer note, for example:
+
+```bash
+git commit -m "更新寓言写作 skill"
+```
+
+```bash
+git push
+```
+
+Upload local commits to GitHub. Other computers cannot receive the change until this runs successfully.
+
+```bash
+git pull
+```
+
+Download commits from GitHub onto this computer.
+
+Short version:
+
+- `add`: choose changed files.
+- `commit`: save a local version.
+- `push`: upload to GitHub.
+- `pull`: download from GitHub.
+
 ## On The Other Mac
 
 ```bash
