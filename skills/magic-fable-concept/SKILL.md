@@ -1,79 +1,116 @@
 ---
 name: magic-fable-concept
-description: Write concise Chinese fables that indirectly explain abstract concepts, theories, mental models, or disciplinary terms. Use when the user asks for a concept to be explained as an寓言, wants a story plus concept analysis and test questions, or provides a `{concept}` placeholder. Default to recurring Detective Conan characters and modern mystery scenes when compatible with the request.
+description: Create a Chinese fable around a user-provided concept using Detective Conan characters, then present it as an immersive web experience. Use when the user asks to (1) write a fable/parable/story around a concept with Conan characters, (2) present a concept through a story-webpage combination, (3) create an immersive web page for a philosophical/cinematic concept, or (4) any task involving "concept + fable + web presentation". The skill covers both the narrative writing (1000-word fable with concept analysis and test questions) and the frontend webapp (theatrical immersive single-page experience with visual metaphors and core effects).
 ---
 
 # Magic Fable Concept
 
-## Core Task
+## Overview
 
-围绕用户给出的概念写一则 1000 字以内的中文寓言，先用故事间接包住概念，再在故事后明确解析概念，并提出两个检验问题。
+This skill produces a two-part deliverable:
 
-除非用户另有要求，优先使用《名侦探柯南》动画/漫画里的稳定角色群像反复登场；每篇正文最多选 2-3 个角色，不把群像一次性塞满。
+1. **A Chinese fable** (1000 words) using 2-3 Detective Conan characters that indirectly wraps around a user-provided concept, followed by explicit concept analysis and two test questions
+2. **An immersive web experience** that presents the fable and concept with visual metaphors, core effects, and theatrical interactions
 
-## Default Ensemble
+## Workflow
 
-优先从这组人物里选角色，保持连续宇宙感和较低理解成本：
+### Phase 1: Write the Fable
 
-- 江户川柯南：观察细节、追问因果，常把看似偶然的事连成一条线。
-- 毛利兰：重视情感、承诺和直觉，能把冷冰冰的推理拉回人的处境。
-- 毛利小五郎：容易被表象带偏，适合制造误判、反差和喜感转折。
-- 灰原哀：冷静、克制，适合表现代价、风险、边界和不愿明说的担忧。
-- 阿笠博士：适合提供小道具、实验装置和日常技术场景。
-- 服部平次：适合表现竞争、地域视角、另一种推理路径和直率判断。
-- 怪盗基德：适合表现伪装、注意力操控、价值错置和漂亮的反转。
-- 目暮警官：适合表现制度流程、既有判断和案件处理惯性。
-- 少年侦探团：少量使用，适合表现天真误读、集体行动和意外线索。
-- 安室透：适合表现多重身份、策略选择、隐藏目标和克制表达。
-- 赤井秀一：适合表现远距离布局、耐心等待和低调干预。
+1. Understand the user's concept
+2. Select 2-3 Conan characters whose traits map to the concept's dimensions (see references/fable-writing.md for full character guide)
+3. Choose a concrete daily-life scene (cafe, school, train, backstage, etc.)
+4. Write the fable following all constraints (no concept names in body, no banned openings, 2-3 characters only)
+5. Write concept analysis mapping story elements to the concept
+6. Write two test questions (comprehension + transfer)
+7. Run quality check
 
-默认场景优先选择现代日常和轻推理现场：毛利侦探事务所、波洛咖啡厅、学校活动、商店街、列车车厢、展览会、游乐园、酒店大厅、警局走廊、阿笠博士家等。
+**For full writing rules, character guide, and quality checklist: read references/fable-writing.md**
 
-可以使用原作角色的稳定人设、关系张力和推理喜剧气质；不要复刻原著具体案件、电影桥段、长台词或完整剧情。寓言应围绕用户给出的概念设计一个新的小事件，而不是重写原作。
+### Phase 2: Design the Web Experience
 
-## Fable Rules
+1. Determine the core visual metaphor based on the concept and fable content
+2. Select aesthetic direction (dark brutalism, zen minimal, cyberpunk, retro film, organic nature, industrial)
+3. Write design PRD (design.md) covering: visual system, page structure, core effects, animations, interactions
+4. For full design guidelines: read references/web-presentation.md
 
-- 正文不加标题，不写引导语，直接进入场景。
-- 全文第一部分控制在 1000 字以内。
-- 正文不出现概念名称，不使用该领域术语。
-- 使用一个核心场景和一两次转折，不铺陈世界观。
-- 角色不超过三个，最好两个；让互动本身承载寓意。
-- 直到接近结尾才让读者隐约意识到概念所指。
-- 不让角色跳出来解释概念，不写说教台词。
-- 细节要具体：一次交易、一次门诊、一次放行、一次拆卸、一次分拣、一次课堂事故，都比宏大远征更好。
+### Phase 3: Build the Webapp
 
-## Avoid List
+1. Use webapp-building skill to init project
+2. Install additional deps: `gsap @studio-freight/lenis three threejs-toys`
+3. Generate images using generate_image (6-10 images, grayscale/dark palette, 16:9 or 2:3)
+4. Implement sections in order:
+   - LoadingCurtain (click-to-open, sessionStorage persistence)
+   - HeroSection (title, spotlight canvas, SVG decorations)
+   - Act1Fable (two-column: character card + fable text, scroll reveal)
+   - Act2Analysis (concept name display, definition block, mapping table)
+   - TransitionIntermission (full-screen visual break, elastic ribbon or particles)
+   - Act3Questions (focus-mode hover cards with test questions)
+   - Act4Farewell (quote, closing statement, replay button)
+   - Footer
+5. Implement global effects: ParticleBackground (Three.js), ActIndicator, smooth scroll
+6. Build and deploy
 
-不要用这些开头：“从前有个地方……”“某天某人遇见某事……”“在很远的山里……”。直接从动作、物件、交易、故障或一句具体台词开始。
+**For full web implementation details, tech stack, and effect patterns: read references/web-presentation.md**
 
-## Output Format
+## Standard Page Sections
 
-按三部分输出：
+```
+LoadingCurtain    →  Click to open, sessionStorage remembers state
+HeroSection       →  Title + subtitle + spotlight + scroll indicator
+Act1Fable         →  Character cards + fable text, scroll reveal
+Act2Analysis      →  Concept name + definition + mapping table
+Transition        →  Full-screen visual intermission
+Act3Questions     →  Two question cards with focus-mode hover
+Act4Farewell      →  Quote + closing + replay button
+Footer            →  Minimal
+```
 
-第一部分：寓言正文
+## Standard Color Palette (Dark Brutalism Default)
 
-- 直接输出故事，不加标题、不加引导语。
-- 正文内不要点破概念。
+```css
+--color-bg: #111111;
+--color-bg-alt: #1a1a1a;
+--color-text: #ffffff;
+--color-text-dim: #808080;
+--color-border: #333333;
+```
 
-第二部分：概念解析
+Adapt based on chosen aesthetic direction.
 
-1. 写清概念名称、所属流派或学科、核心定义。
-2. 逐一对应故事元素与概念构成：角色、物件、动作、转折分别映射什么。
+## Core Effects Library
 
-第三部分：检验问题
+| Effect | When to Use | Tech |
+|--------|------------|------|
+| WebGL Particles | Global atmosphere | Three.js ShaderMaterial |
+| Canvas 2D Spotlight | Hero section | requestAnimationFrame |
+| GSAP Scroll Reveal | Text sections | ScrollTrigger |
+| Curtain Transition | Opening/closing | GSAP x-transform |
+| Focus Mode Cards | Questions section | CSS hover + siblings |
+| Elastic Ribbon | Intermission | Canvas 2D sine waves |
+| 3D Text Ripple | Title entrances | GSAP rotateX stagger |
 
-1. 理解检验：提一个具体可答的问题，检查用户是否理解概念核心，而非只记住剧情。
-2. 迁移检验：提一个具体可答的问题，要求用户把概念迁移到相关领域并自己举例。
+Pick 3-5 effects max. Each must serve the concept metaphor.
 
-不要问“你怎么看待这个概念”这类空泛问题。
+## Quality Checklist
 
-## Quality Check
+Before delivery, verify:
 
-交付前自检：
+**Fable:**
+- [ ] No concept name or terminology in body text
+- [ ] No banned opening phrases
+- [ ] Only 2-3 characters used
+- [ ] Clear scene + at least one twist
+- [ ] Analysis accurately maps story to concept
+- [ ] Both questions are specific, answerable, test comprehension + transfer
 
-- 正文是否真的没有出现概念名和术语。
-- 是否避开禁用开头。
-- 是否只用了 2-3 个角色。
-- 是否有一个清晰场景和至少一次有效转折。
-- 解析是否准确，不为了贴故事而扭曲概念。
-- 两个问题是否具体、可回答、能检验理解和迁移。
+**Web:**
+- [ ] Visual metaphor maps to concept
+- [ ] All 8 sections present
+- [ ] Loading curtain has sessionStorage persistence
+- [ ] Smooth scroll works (Lenis)
+- [ ] Scroll-driven text reveal in Act 1
+- [ ] Focus mode hover on question cards
+- [ ] Replay button resets and reloads
+- [ ] Mobile responsive (768px breakpoint)
+- [ ] Images generated and placed in public/images/
+- [ ] Build succeeds without errors

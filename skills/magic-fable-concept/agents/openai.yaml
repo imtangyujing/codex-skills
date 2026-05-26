@@ -1,7 +1,7 @@
 interface:
   display_name: "Magic Fable Concept"
-  short_description: "用魔法群像寓言解释抽象概念"
-  default_prompt: "Use $magic-fable-concept to write a concise fable that explains {concept} through a recurring magical ensemble."
+  short_description: "用柯南式寓言和沉浸网页解释抽象概念"
+  default_prompt: "Use $magic-fable-concept to write a Chinese fable that explains {concept} with Detective Conan-style characters, then turn it into an immersive web presentation."
 
 policy:
   allow_implicit_invocation: true
