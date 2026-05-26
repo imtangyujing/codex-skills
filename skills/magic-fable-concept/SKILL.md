@@ -1,6 +1,6 @@
 ---
 name: magic-fable-concept
-description: Write concise Chinese fables that indirectly explain abstract concepts, theories, mental models, or disciplinary terms. Use when the user asks for a concept to be explained as an寓言, wants a story plus concept analysis and test questions, or provides a `{concept}` placeholder. Default to a recurring original magical ensemble with hobbit-like small folk, ring-like enchanted objects, and wizard-school atmosphere when compatible with the request.
+description: Write concise Chinese fables that indirectly explain abstract concepts, theories, mental models, or disciplinary terms. Use when the user asks for a concept to be explained as an寓言, wants a story plus concept analysis and test questions, or provides a `{concept}` placeholder. Default to recurring Harry Potter book/movie characters and Hogwarts-style magical school scenes when compatible with the request.
 ---
 
 # Magic Fable Concept
@@ -9,20 +9,27 @@ description: Write concise Chinese fables that indirectly explain abstract conce
 
 围绕用户给出的概念写一则 1000 字以内的中文寓言，先用故事间接包住概念，再在故事后明确解析概念，并提出两个检验问题。
 
-除非用户另有要求，使用同一批原创魔法宇宙群像反复登场；每篇正文最多选 2-3 个角色，不把群像一次性塞满。
+除非用户另有要求，优先使用《哈利·波特》原著/电影里的稳定角色群像反复登场；每篇正文最多选 2-3 个角色，不把群像一次性塞满。
 
 ## Default Ensemble
 
-优先从这组人物里选角色，保持连续宇宙感：
+优先从这组人物里选角色，保持连续宇宙感和较低理解成本：
 
-- 米洛：爱囤东西的小个子洞居族，务实、怕亏、脚程快。
-- 莉拉：寄宿魔法学院的低年级学生，聪明但常把规则当答案。
-- 阿槐：学院温室里会说话的旧扫帚，见过很多学生和事故。
-- 诺克：二手魔法铺掌柜，卖旧袍、旧坩埚、会黏人的小戒指。
-- 银环：一枚会悄悄改变持有者选择的戒指，不发表大道理，只制造诱惑和偏差。
-- 莫夫：学院夜班看门人，负责登记、放行、收拾烂摊子。
+- 哈利：容易被推到事件中心，直觉强，常在压力下做选择。
+- 赫敏：重视规则、证据和书本知识，擅长把混乱整理成步骤。
+- 罗恩：敏感于公平、面子和同伴关系，能让抽象问题落回日常。
+- 邓布利多：少量使用，适合制造含蓄安排，不要让他承担说教功能。
+- 斯内普：适合表现偏见、误判、隐藏动机、严厉反馈和双重约束。
+- 马尔福：适合表现身份、攀比、路径依赖、外部压力和错误激励。
+- 海格：适合表现善意、笨拙保护、经验知识和非标准判断。
+- 麦格教授：适合表现制度、边界、纪律和克制的关怀。
+- 卢娜：适合表现旁逸视角、非主流线索和被忽视的信息。
+- 纳威：适合表现迟到的勇气、低估、练习和成长。
+- 多比：适合表现忠诚、束缚、代价和自我解放。
 
-可以保留霍比特人、魔戒、哈利波特式的气质：小个子冒险者、诱人的戒指、魔法学校、猫头鹰信件、扫帚、药剂课、旧魔法铺。正文优先用原创人物、原创地点、原创事件；不要复述原作剧情、台词或专名，除非用户明确要求同人。
+默认场景优先选择霍格沃茨及其周边：魔药课、变形课、禁林边缘、礼堂、魁地奇训练、公共休息室、校医院、猫头鹰棚、对角巷、霍格莫德等。
+
+可以使用原作角色的稳定人设、关系张力和魔法世界常识；不要复刻原著具体章节、电影桥段、长台词或完整剧情。寓言应围绕用户给出的概念设计一个新的小事件，而不是重写原作。
 
 ## Fable Rules
 
