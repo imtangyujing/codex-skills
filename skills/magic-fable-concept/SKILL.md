@@ -1,6 +1,6 @@
 ---
 name: magic-fable-concept
-description: Write concise Chinese fables that indirectly explain abstract concepts, theories, mental models, or disciplinary terms. Use when the user asks for a concept to be explained as an寓言, wants a story plus concept analysis and test questions, or provides a `{concept}` placeholder. Default to recurring Harry Potter book/movie characters and Hogwarts-style magical school scenes when compatible with the request.
+description: Write concise Chinese fables that indirectly explain abstract concepts, theories, mental models, or disciplinary terms. Use when the user asks for a concept to be explained as an寓言, wants a story plus concept analysis and test questions, or provides a `{concept}` placeholder. Default to recurring Detective Conan characters and modern mystery scenes when compatible with the request.
 ---
 
 # Magic Fable Concept
@@ -9,27 +9,27 @@ description: Write concise Chinese fables that indirectly explain abstract conce
 
 围绕用户给出的概念写一则 1000 字以内的中文寓言，先用故事间接包住概念，再在故事后明确解析概念，并提出两个检验问题。
 
-除非用户另有要求，优先使用《哈利·波特》原著/电影里的稳定角色群像反复登场；每篇正文最多选 2-3 个角色，不把群像一次性塞满。
+除非用户另有要求，优先使用《名侦探柯南》动画/漫画里的稳定角色群像反复登场；每篇正文最多选 2-3 个角色，不把群像一次性塞满。
 
 ## Default Ensemble
 
 优先从这组人物里选角色，保持连续宇宙感和较低理解成本：
 
-- 哈利：容易被推到事件中心，直觉强，常在压力下做选择。
-- 赫敏：重视规则、证据和书本知识，擅长把混乱整理成步骤。
-- 罗恩：敏感于公平、面子和同伴关系，能让抽象问题落回日常。
-- 邓布利多：少量使用，适合制造含蓄安排，不要让他承担说教功能。
-- 斯内普：适合表现偏见、误判、隐藏动机、严厉反馈和双重约束。
-- 马尔福：适合表现身份、攀比、路径依赖、外部压力和错误激励。
-- 海格：适合表现善意、笨拙保护、经验知识和非标准判断。
-- 麦格教授：适合表现制度、边界、纪律和克制的关怀。
-- 卢娜：适合表现旁逸视角、非主流线索和被忽视的信息。
-- 纳威：适合表现迟到的勇气、低估、练习和成长。
-- 多比：适合表现忠诚、束缚、代价和自我解放。
+- 江户川柯南：观察细节、追问因果，常把看似偶然的事连成一条线。
+- 毛利兰：重视情感、承诺和直觉，能把冷冰冰的推理拉回人的处境。
+- 毛利小五郎：容易被表象带偏，适合制造误判、反差和喜感转折。
+- 灰原哀：冷静、克制，适合表现代价、风险、边界和不愿明说的担忧。
+- 阿笠博士：适合提供小道具、实验装置和日常技术场景。
+- 服部平次：适合表现竞争、地域视角、另一种推理路径和直率判断。
+- 怪盗基德：适合表现伪装、注意力操控、价值错置和漂亮的反转。
+- 目暮警官：适合表现制度流程、既有判断和案件处理惯性。
+- 少年侦探团：少量使用，适合表现天真误读、集体行动和意外线索。
+- 安室透：适合表现多重身份、策略选择、隐藏目标和克制表达。
+- 赤井秀一：适合表现远距离布局、耐心等待和低调干预。
 
-默认场景优先选择霍格沃茨及其周边：魔药课、变形课、禁林边缘、礼堂、魁地奇训练、公共休息室、校医院、猫头鹰棚、对角巷、霍格莫德等。
+默认场景优先选择现代日常和轻推理现场：毛利侦探事务所、波洛咖啡厅、学校活动、商店街、列车车厢、展览会、游乐园、酒店大厅、警局走廊、阿笠博士家等。
 
-可以使用原作角色的稳定人设、关系张力和魔法世界常识；不要复刻原著具体章节、电影桥段、长台词或完整剧情。寓言应围绕用户给出的概念设计一个新的小事件，而不是重写原作。
+可以使用原作角色的稳定人设、关系张力和推理喜剧气质；不要复刻原著具体案件、电影桥段、长台词或完整剧情。寓言应围绕用户给出的概念设计一个新的小事件，而不是重写原作。
 
 ## Fable Rules
 
