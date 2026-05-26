@@ -1,0 +1,7 @@
+interface:
+  display_name: "Magic Fable Concept"
+  short_description: "用魔法群像寓言解释抽象概念"
+  default_prompt: "Use $magic-fable-concept to write a concise fable that explains {concept} through a recurring magical ensemble."
+
+policy:
+  allow_implicit_invocation: true

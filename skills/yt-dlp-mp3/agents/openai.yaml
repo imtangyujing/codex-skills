@@ -1,0 +1,4 @@
+interface:
+  display_name: "YT-DLP MP3"
+  short_description: "Use yt-dlp to extract MP3 audio from video URLs"
+  default_prompt: "Convert a video URL to MP3 using yt-dlp and save it to ~/Downloads."

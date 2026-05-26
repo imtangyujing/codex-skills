@@ -1,0 +1,4 @@
+interface:
+  display_name: "科技媒体商稿提纲"
+  short_description: "为量子位风格科技媒体商稿生成结构化提纲与开头正文框架"
+  default_prompt: "Use $tech-media-sponsored-outline to draft a structured outline for a Chinese tech media sponsored article."
