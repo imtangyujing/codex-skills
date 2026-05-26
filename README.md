@@ -94,6 +94,109 @@ Short version:
 - `push`: upload to GitHub.
 - `pull`: download from GitHub.
 
+## Common Git Cheat Sheet
+
+Initialize a new Git repo in the current folder:
+
+```bash
+git init
+```
+
+Clone a GitHub repo to this computer:
+
+```bash
+git clone https://github.com/imtangyujing/codex-skills.git
+```
+
+Check current file changes and branch status:
+
+```bash
+git status
+```
+
+See exact unstaged file changes:
+
+```bash
+git diff
+```
+
+Choose files for the next commit:
+
+```bash
+git add skills
+```
+
+Choose everything that changed in the repo:
+
+```bash
+git add .
+```
+
+Save chosen changes as a local version:
+
+```bash
+git commit -m "Update skills"
+```
+
+Show commit history:
+
+```bash
+git log --oneline
+```
+
+Show what changed in one commit:
+
+```bash
+git show <commit-id>
+```
+
+List branches:
+
+```bash
+git branch
+```
+
+Create and switch to a new branch:
+
+```bash
+git checkout -b <branch-name>
+```
+
+Switch to an existing branch:
+
+```bash
+git checkout <branch-name>
+```
+
+Merge another branch into the current branch:
+
+```bash
+git merge <branch-name>
+```
+
+Upload local commits to GitHub:
+
+```bash
+git push
+```
+
+Download GitHub commits to this computer:
+
+```bash
+git pull
+```
+
+For this skills repo, the most common loop is still:
+
+```bash
+cd ~/Documents/Dev/codex-skills
+git status
+git diff
+git add skills
+git commit -m "Update skills"
+git push
+```
+
 ## On The Other Mac
 
 ```bash
