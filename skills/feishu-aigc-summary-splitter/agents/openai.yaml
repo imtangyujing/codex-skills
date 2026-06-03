@@ -1,0 +1,6 @@
+interface:
+  display_name: "Feishu AIGC Summary Splitter"
+  short_description: "Split Feishu summit drafts by assignee"
+  default_prompt: "Use $feishu-aigc-summary-splitter to verify a Feishu summit assignment doc, create split drafts, and group links by assignee."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feishu Doc Edit"
+  short_description: "Apply Feishu doc comments with yellow highlights"
+  default_prompt: "Use $feishu-doc-edit to revise this Feishu document from sidebar comments with yellow highlighted edits."

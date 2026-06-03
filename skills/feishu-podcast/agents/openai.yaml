@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feishu Podcast"
+  short_description: "Download podcast audio and create Feishu Minutes"
+  default_prompt: "Use $feishu-podcast to download this podcast link and upload it into Feishu Minutes."

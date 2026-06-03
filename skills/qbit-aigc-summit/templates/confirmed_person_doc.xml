@@ -1,0 +1,18 @@
+<doc>
+  <title>${person_name}｜AIGC峰会单人稿</title>
+  <h2>##${person_name}，${person_title}</h2>
+  <p></p>
+  <p>${person_title}${person_name}带来主题为《${person_topic}》的分享。</p>
+  <p></p>
+  <p>以下是他的观点精华提炼：</p>
+  <p></p>
+  <ul>
+    <li>${confirmed_insight_1}</li>
+    <li>${confirmed_insight_2}</li>
+    <li>${confirmed_insight_3}</li>
+    <li>${confirmed_insight_4}</li>
+    <li>${confirmed_insight_5}</li>
+  </ul>
+  <p></p>
+  <p data-person-id="${person_id}"></p>
+</doc>

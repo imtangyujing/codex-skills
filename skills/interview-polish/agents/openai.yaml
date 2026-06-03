@@ -1,0 +1,4 @@
+interface:
+  display_name: "Interview Polish"
+  short_description: "Polish Chinese interview transcripts"
+  default_prompt: "Use $interview-polish to polish this raw interview transcript into media interview prose."
