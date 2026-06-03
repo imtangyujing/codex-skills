@@ -1,0 +1,4 @@
+interface:
+  display_name: "Qbit Academic Submission"
+  short_description: "Process Qbit academic submissions into Feishu Base records."
+  default_prompt: "Use this skill to process a Qbit academic submission from a document or Feishu group message, write it to the Scholar Base, and backfill WeChat links."
