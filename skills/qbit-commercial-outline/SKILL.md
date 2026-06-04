@@ -1,5 +1,5 @@
 ---
-name: tech-media-sponsored-outline
+name: qbit-commercial-outline
 description: 为量子位风格的科技自媒体商业稿件撰写结构化提纲。Use when Codex needs to draft or refine Chinese tech media sponsored article outlines, especially 商稿、品牌稿、人物稿、合作稿、发布稿、借势稿，需要标题方向、开头逐字稿、正文分段结构、收尾升华和量子位风格叙事节奏。
 ---
 
