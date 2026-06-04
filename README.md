@@ -49,6 +49,30 @@ git push
 
 Use this after changing existing skills or adding new ones.
 
+## One-command Sync
+
+After editing files under `skills/`, run:
+
+```bash
+cd ~/Documents/Dev/codex-skills
+./sync.sh -m "Update skills"
+```
+
+The script cleans local junk files, validates every skill, links repo skills into
+`~/.codex/skills`, commits changed skill files, and pushes the current branch.
+
+If you want this Mac to exactly match the repo and back up local-only skills:
+
+```bash
+./sync.sh -m "Update skills" --prune-extra-local
+```
+
+For a dry local commit/test without pushing:
+
+```bash
+./sync.sh -m "Update skills" --no-push
+```
+
 ## Git Commands In Plain Words
 
 These are normal Git commands, not custom commands created for this repo.
