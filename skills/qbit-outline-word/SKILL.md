@@ -23,7 +23,7 @@ python3 /Users/lzw/.codex/skills/qbit-outline-word/scripts/feishu_outline_to_wor
 
 ## Defaults
 
-- Template: `/Users/lzw/Library/Mobile Documents/com~apple~CloudDocs/Documents/商稿/联想/XX-提纲.docx`
+- Template: `assets/qbit-outline-template.docx` inside this skill directory
 - Output folder: `~/Downloads`
 - Output filename: Feishu document title plus `.docx`
 - Identity: `--as user`
@@ -35,6 +35,7 @@ Use `--output-dir '<folder>'` only when the user explicitly wants a different de
 Use `--keep-export` only when the user wants the raw Feishu export retained next to the final Word file.
 Use `--drop-from-heading '<heading-text>'` when the user wants to remove a final draft or appendix section from that heading through the end of the body, for example `--drop-from-heading '草稿'`.
 Template header/banner images are kept by default. Source document media files are copied with collision-safe names so they do not overwrite template banner assets.
+The bundled template is intentionally stripped of sample body images so text-only outlines stay small and portable across machines.
 
 ## Validation
 

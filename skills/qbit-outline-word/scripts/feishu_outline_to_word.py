@@ -35,9 +35,8 @@ R_LINK = f"{{{NS['r']}}}link"
 RELATIONSHIP_ATTRS = {R_ID, R_EMBED, R_LINK}
 
 
-DEFAULT_TEMPLATE = Path(
-    "/Users/lzw/Library/Mobile Documents/com~apple~CloudDocs/Documents/商稿/联想/XX-提纲.docx"
-)
+SKILL_DIR = Path(__file__).resolve().parents[1]
+DEFAULT_TEMPLATE = SKILL_DIR / "assets/qbit-outline-template.docx"
 DEFAULT_OUTPUT_DIR = Path.home() / "Downloads"
 
 
@@ -391,8 +390,8 @@ def merge_docx(
                 dst_body.append(deepcopy(child))
         if drop_heading:
             drop_from_heading(dst_body, drop_heading)
-            prune_unused_document_relationships(template_dir, dst_body)
-            prune_unreferenced_media(template_dir)
+        prune_unused_document_relationships(template_dir, dst_body)
+        prune_unreferenced_media(template_dir)
         if dst_sect is not None:
             dst_body.append(dst_sect)
         center_banner_title(dst_body)
