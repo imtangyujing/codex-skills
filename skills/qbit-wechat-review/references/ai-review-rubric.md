@@ -29,7 +29,8 @@ No extra sections unless the user asks.
 - `内容体裁`
 - Raw metrics: reads, likes, comments, shares, saves, follows, completion rate, average stay time
 - Secondary metrics: like rate, comment rate, share rate, content quality score
-- Article body from qbitai.com or accessible WeChat source
+- Article body from the provided WeChat URL when available
+- qbitai.com body only when WeChat source is missing, inaccessible, or incomplete
 
 ## Analysis Principles
 
@@ -48,4 +49,5 @@ No extra sections unless the user asks.
 - Avoid vague claims like "选题不错" unless followed by the exact reason.
 - Mention numbers sparingly; use them to support a judgment, not to restate the table.
 - Do not invent facts that are not in the article or data.
-- If article matching is uncertain, say so in the final response and make the review more cautious.
+- If the WeChat URL is accessible, treat it as the authoritative article context.
+- If article matching is uncertain because qbitai.com fallback was required, say so in the final response and make the review more cautious.
