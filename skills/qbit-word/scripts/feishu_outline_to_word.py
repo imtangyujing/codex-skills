@@ -17,7 +17,15 @@ from xml.etree import ElementTree as ET
 
 
 NS = {
+    "a": "http://schemas.openxmlformats.org/drawingml/2006/main",
+    "mc": "http://schemas.openxmlformats.org/markup-compatibility/2006",
+    "pic": "http://schemas.openxmlformats.org/drawingml/2006/picture",
+    "wp": "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing",
+    "wp14": "http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing",
     "w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    "w10": "urn:schemas-microsoft-com:office:word",
+    "w14": "http://schemas.microsoft.com/office/word/2010/wordml",
+    "w15": "http://schemas.microsoft.com/office/word/2012/wordml",
     "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
     "v": "urn:schemas-microsoft-com:vml",
     "ct": "http://schemas.openxmlformats.org/package/2006/content-types",
@@ -36,7 +44,7 @@ RELATIONSHIP_ATTRS = {R_ID, R_EMBED, R_LINK}
 
 
 SKILL_DIR = Path(__file__).resolve().parents[1]
-DEFAULT_TEMPLATE = SKILL_DIR / "assets/qbit-outline-template.docx"
+DEFAULT_TEMPLATE = SKILL_DIR / "assets/qbit-template.docx"
 DEFAULT_OUTPUT_DIR = Path.home() / "Downloads"
 
 
@@ -305,6 +313,18 @@ def drop_from_heading(body: ET.Element, heading: str) -> None:
             body.remove(child)
 
 
+def strip_generated_content_notice(body: ET.Element) -> None:
+    notice_patterns = (
+        "内容由AI生成，请谨慎参考",
+        "内容由 AI 生成，请谨慎参考",
+    )
+    for child in list(body):
+        text = paragraph_text(child).replace(" ", "")
+        if any(pattern.replace(" ", "") in text for pattern in notice_patterns):
+            if child.tag != f"{W_NS}sectPr":
+                body.remove(child)
+
+
 def relationship_ids(elem: ET.Element) -> set[str]:
     ids: set[str] = set()
     for node in elem.iter():
@@ -354,6 +374,14 @@ def prune_unreferenced_media(template_dir: Path) -> None:
             media_path.unlink()
 
 
+def normalize_xml_parts(template_dir: Path) -> None:
+    for path in template_dir.rglob("*"):
+        if not path.is_file() or path.suffix not in {".xml", ".rels"}:
+            continue
+        tree = ET.parse(path)
+        tree.write(path, encoding="UTF-8", xml_declaration=True)
+
+
 def merge_docx(
     template: Path,
     source: Path,
@@ -388,6 +416,7 @@ def merge_docx(
         for child in list(src_body):
             if child.tag != f"{W_NS}sectPr":
                 dst_body.append(deepcopy(child))
+        strip_generated_content_notice(dst_body)
         if drop_heading:
             drop_from_heading(dst_body, drop_heading)
         prune_unused_document_relationships(template_dir, dst_body)
@@ -397,6 +426,7 @@ def merge_docx(
         center_banner_title(dst_body)
 
         dst_tree.write(dst_doc_path, encoding="UTF-8", xml_declaration=True)
+        normalize_xml_parts(template_dir)
         output.parent.mkdir(parents=True, exist_ok=True)
         zip_docx(template_dir, output)
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Qbit Word"
+  short_description: "Export Feishu outlines to Qbit Word"
+  default_prompt: "Use $qbit-word to export this Feishu outline into the Qbit Word template."
