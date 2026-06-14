@@ -1,0 +1,4 @@
+interface:
+  display_name: "Qbit Lark Edit"
+  short_description: "Apply Feishu comments with visible review marks"
+  default_prompt: "Use $qbit-lark-edit to apply Feishu document comments with yellow highlights and strikethrough review marks."
