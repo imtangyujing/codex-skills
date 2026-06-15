@@ -1,6 +1,6 @@
 ---
 name: qbit-wechat-review
-description: 量子位微信公众号内容复盘与同题分析工作流。Use when the user provides 微信公众号/量子位文章数据明细 Excel、CSV、文章标题、微信公众号文章链接、同题三家文章链接、qbitai.com 链接，要求读取微信文章正文、导入或更新飞书多维表格、计算内容指标、生成 AI 复盘、沉淀优缺点洞察、对比量子位/新智元/机器之心同题文章。尤其适用于「微信公众号内容复盘」Base、公众号后台数据明细、mp.weixin.qq.com 文章正文读取、量子位官网备用检索、AI 复盘优缺点分析、同题分析。
+description: 量子位微信公众号内容复盘与同题分析工作流。Use when the user provides 微信公众号/量子位文章数据明细 Excel、CSV、文章标题、微信公众号文章链接、同题三家文章链接、qbitai.com 链接，要求读取微信文章正文、导入或更新飞书多维表格、计算内容指标、生成多角度卡片式 AI 复盘、对比量子位/新智元/机器之心同题文章。尤其适用于「微信公众号内容复盘」Base、公众号后台数据明细、mp.weixin.qq.com 文章正文读取、量子位官网备用检索、同题分析。
 ---
 
 # 量子位公众号内容复盘
@@ -201,6 +201,10 @@ Key current rules:
 Read `references/ai-review-rubric.md` before writing `AI复盘`.
 
 The review must connect content actions to data results. Avoid generic comments such as 「数据表现较好」 unless tied to a concrete editorial move.
+
+Before writing `AI复盘`, build or load a batch baseline from the current review set. At minimum calculate medians for `阅读数 R`, `点赞率`, `在看率`, and `转发率`. Judge each article by whether these metrics are above, near, or below the batch median before explaining causes. Do not treat high absolute reads as content quality by itself.
+
+After deriving the metric signal, analyze the article at a concrete body level. `内容分析` must cite specific正文 evidence such as the opening judgment, a named example, a key contrast, a concrete scene, a data point, a structure choice, or a memorable phrase from the body. Use these evidence points to explain why the article is high or low on reading scale, recognition, endorsement, and shareability. Avoid generic claims such as 「信息密度高」 unless followed by the actual information pattern or example.
 
 For 量子位 self-owned article review, write `AI复盘` in this format:
 

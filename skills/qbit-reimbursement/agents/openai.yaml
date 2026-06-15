@@ -1,0 +1,4 @@
+interface:
+  display_name: "Qbit Reimbursement"
+  short_description: "批量填写量子位报销发票二维码并保存成功截图"
+  default_prompt: "Use $qbit-reimbursement to fill and submit these Qbit reimbursement invoice QR codes."
