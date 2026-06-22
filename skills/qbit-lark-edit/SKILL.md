@@ -48,7 +48,7 @@ For long drafts, narrow the fetch with keyword, section, or range scope after lo
 
 4. Apply one local edit per comment target.
 
-Use `docs +update` with the installed CLI's supported flags. Prefer `str_replace` around the smallest stable text span.
+Use `docs +update` with the installed CLI's actual supported flags. Prefer `str_replace` around the smallest stable text span. The CLI help output may lag behind the implementation, so verify the real request shape with `--dry-run` before the first write in a session.
 
 ```bash
 lark-cli docs +update --api-version v2 \
@@ -58,6 +58,20 @@ lark-cli docs +update --api-version v2 \
   --content "old local text <text background-color=\"yellow\">new addition</text>" \
   --doc-format markdown
 ```
+
+First-write probe:
+
+```bash
+lark-cli docs +update --api-version v2 \
+  --doc "<DOC_URL_OR_TOKEN>" \
+  --command str_replace \
+  --pattern "old local text" \
+  --content "old local text <text background-color=\"yellow\">new addition</text>" \
+  --doc-format markdown \
+  --dry-run
+```
+
+If `--help` lists newer-looking flags such as `--mode`, but execution reports `--command is required`, treat `--command str_replace` as the source of truth for that installed CLI. Do not switch to `--mode replace_range` unless a dry run succeeds.
 
 5. Verify the edited area.
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Jay-Multimodal-Context"
+  short_description: "Turn video, audio, or transcripts into context"
+  default_prompt: "Use $jay-multimodal-context to turn these video, audio, or transcript sources into polished Markdown context."
