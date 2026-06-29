@@ -17,6 +17,21 @@ Current target Base:
 
 If the user provides a different Base URL or token, use the provided target instead of hardcoding any previous token.
 
+## Hybrid Metric Source
+
+In the `Hybrid` branch, metrics come from user-provided WeChat backend screenshots, screenshot OCR results, or user-provided metric tables by default. Do not fetch metrics through `wxdown-service`, proxy capture, or `getappmsgext` during ordinary review runs.
+
+Use this screenshot/table mapping:
+
+- `阅读`/`阅读数` -> `阅读数 R`
+- `点赞`/`点赞数` -> `点赞数 L`
+- `评论`/`评论数` -> `评论数 C`
+- `分享`/`转发`/`转发数` -> `转发数 S`
+- `收藏`/`收藏数` -> `收藏数`
+- `在看`/`在看数` -> `在看数`
+
+If a screenshot omits a metric, leave that field blank. Write `0` only when the screenshot or table explicitly shows zero. Preserve the screenshot or OCR note as audit context when practical, for example in the local run folder or attachment notes, but do not create new Base fields unless the user asks.
+
 ## Modification Boundary
 
 During ordinary review runs, only fill or update record data.
@@ -117,12 +132,13 @@ Queue/button workflow:
 
 `同题统计表` should contain one real table row for each comparison dimension:
 
+- `结论`
 - `标题`
-- `发布时间`
-- `阅读数`
-- `点赞率`
-- `在看率`
-- `转发率`
+- `起笔`
+- `叙事`
+- `证据`
+- `扩展`
+- `风格`
 
 Use three media columns in fixed order: `量子位`, `新智元`, `机器之心`. Use a numeric `排序` field to keep the row order above, and hide `排序` plus `同题分析记录` in the stats table display view.
 
@@ -132,22 +148,22 @@ The display view for the stats table is:
 - View ID: `vewTdGuLzY`
 - Visible fields: `维度`, `量子位`, `新智元`, `机器之心`.
 
-When writing `内容差异`, use the secondary metrics in `同题统计表` as evidence, not only subjective reading impressions:
+When writing `同题统计表` rows, use secondary metrics as evidence inside the qualitative dimension cells:
 
 - `点赞率`: evidence for direct recognition and approval.
 - `在看率`: evidence for resonance, identity, and willingness to endorse.
 - `转发率`: evidence for shareability, information utility, and social currency.
 
-Start from the rate gaps, then connect them to concrete content differences such as opening strength, information density, narrative rhythm, framing, examples, emotional intensity, and value elevation. Prefer practical claims like `新智元转发率更高，说明其标题和开头更适合快速转发` over generic comments like `内容更好`.
+Start from the seven dimensions, then use rate gaps to support concrete content differences such as opening strength, information density, narrative rhythm, framing, examples, emotional intensity, and value elevation. Prefer practical claims like `新智元转发率更高，说明其标题和开头更适合快速转发` over generic comments like `内容更好`.
 
-When writing same-topic stats rows, calculate rates as plain numbers before formatting them into `同题统计表`:
+When writing same-topic stats rows, calculate rates from user-provided screenshot/table metrics as plain numbers before formatting them into `同题统计表`:
 
 - 点赞率 = `点赞数 L / 阅读数 R`
 - 在看率 = `在看数 / 阅读数 R`
 - 转发率 = `转发数 S / 阅读数 R`
 - 质量分 = `MIN((点赞率 * 0.4 + 在看率 * 0.3 + 转发率 * 0.3) * 400, 10)`
 
-For the display table, format rates as percentages for readability.
+Do not create separate stats rows for `发布时间`, `阅读数`, `点赞率`, `在看率`, or `转发率` in same-topic analysis. If these numbers are needed, embed them briefly in the relevant qualitative row or structured analysis field.
 
 ## Author Field
 
