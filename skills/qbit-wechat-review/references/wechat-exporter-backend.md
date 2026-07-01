@@ -2,78 +2,39 @@
 
 ## Validated Local Components
 
-- Article body/base JSON: `/Users/jay/Documents/Lark/tools/wechat-article-exporter`
+- Account search/article list/article body JSON: `~/Documents/Lark/tools/wechat-article-exporter`
 - Frontend/API service: `http://127.0.0.1:3000`
 
-The current backend replaces browser-only public page extraction for `mp.weixin.qq.com/s/...` tasks. For title-only inputs, resolve an article URL with ordinary web search first.
+The local backend handles `mp.weixin.qq.com/s/...` article body retrieval and title/media-based article discovery. For title-only inputs, use local account search + article list first; use ordinary web search only as fallback.
 
-Metric retrieval through `wxdown-service`, proxy capture, and `getappmsgext` is temporarily offline in the `Hybrid` branch. Use user-provided WeChat backend screenshots or user-provided metric tables for metrics.
-
-## Qbit-Owned Article Entry Points
-
-Use these two fixed entry points for 量子位自有文章:
-
-- Link input: when the user provides `mp.weixin.qq.com/s/...`, use that link directly and fetch body/base JSON with the local download API. Read metrics from user-provided screenshots or tables.
-- Title input: when the user provides only article titles, use ordinary web search to resolve each title to an article URL. Take the first usable high-confidence result as the body source. If the result is a WeChat URL, run the same link input path for body, screenshot/table metrics, author extraction, attachment upload, and review writing. If the result is a repost or media page, use it for body context and attachment only.
-- Do not use any fixed official-site path for title-only inputs.
-- A title/link discovery pass is incomplete by itself. Do not stop after writing only title, date, link, read count, or publication position.
+Metric retrieval through `wxdown-service`, proxy capture, and `getappmsgext` is offline. Use **用户指标来源**（see SKILL.md §Terminology）for metrics.
 
 ## First-Run Install
 
-Run this section before the first review task on a new computer, or when the article exporter is missing.
+Run this section before the first review task on a new computer, or when `~/Documents/Lark/tools/wechat-article-exporter` is missing or `http://127.0.0.1:3000/api/public/v1/download` is unavailable.
 
-### Install Local Repositories
-
-Create the tools directory:
+### Clone And Build
 
 ```bash
-mkdir -p /Users/jay/Documents/Lark/tools
-```
+mkdir -p ~/Documents/Lark/tools
 
-Clone the article exporter:
-
-```bash
 git clone https://github.com/wechat-article/wechat-article-exporter.git \
-  /Users/jay/Documents/Lark/tools/wechat-article-exporter
+  ~/Documents/Lark/tools/wechat-article-exporter
 ```
 
-If the directory already exists, run `git pull` in that directory instead of cloning again.
-
-Install and build `wechat-article-exporter`:
+If the directory already exists, run `git pull` instead.
 
 ```bash
-cd /Users/jay/Documents/Lark/tools/wechat-article-exporter
+cd ~/Documents/Lark/tools/wechat-article-exporter
 npx -y yarn@1.22.22 install --frozen-lockfile
 NODE_OPTIONS=--max-old-space-size=4096 npx -y yarn@1.22.22 build
 ```
 
-### Start Services
-
-Start `wechat-article-exporter`:
+### Start And Verify
 
 ```bash
-cd /Users/jay/Documents/Lark/tools/wechat-article-exporter
-PORT=3000 HOST=127.0.0.1 node .output/server/index.mjs
-```
-
-Verify listeners:
-
-```bash
-lsof -iTCP:3000 -sTCP:LISTEN -nP
-```
-
-When setup succeeds, tell the user:
-
-```text
-正文抓取准备好了，指标请提供后台截图。
-```
-
-## Start And Verify Services
-
-From `wechat-article-exporter`:
-
-```bash
-PORT=3000 HOST=127.0.0.1 node .output/server/index.mjs
+cd ~/Documents/Lark/tools/wechat-article-exporter
+DEBUG_KEY=qbit-local PORT=3000 HOST=127.0.0.1 node .output/server/index.mjs
 ```
 
 If rebuilding is needed:
@@ -82,15 +43,72 @@ If rebuilding is needed:
 NODE_OPTIONS=--max-old-space-size=4096 npx -y yarn@1.22.22 build
 ```
 
-Verify listeners:
+Verify:
 
 ```bash
 lsof -iTCP:3000 -sTCP:LISTEN -nP
 ```
 
-## Fetch Article Body
+When setup succeeds, tell the user: `文章列表和正文抓取准备好了，指标请提供后台截图。`
 
-Use the public download endpoint:
+## Auth For Article List
+
+Body download does not require login, but account search and article list require the exporter backend to hold a valid `auth-key`.
+
+Check auth:
+
+```bash
+curl -sS 'http://127.0.0.1:3000/api/public/v1/authkey'
+```
+
+If it returns `{"code":-1,...}`, open `http://127.0.0.1:3000` and scan-login with a WeChat public-platform account. Do not ask for `app_secret`.
+
+For Python scripts, pass auth in either form:
+
+```bash
+# Preferred when the service was started with DEBUG_KEY=qbit-local.
+export QBIT_WECHAT_EXPORTER_DEBUG_KEY=qbit-local
+
+# Or pass the browser/API auth-key explicitly when known.
+export QBIT_WECHAT_EXPORTER_AUTH_KEY=<AUTH_KEY>
+```
+
+The scripts send both `X-Auth-Key` and `auth-key` cookie when `QBIT_WECHAT_EXPORTER_AUTH_KEY` is available. When only `QBIT_WECHAT_EXPORTER_DEBUG_KEY` is set, scripts read `/api/_debug?key=...` and reuse the latest local auth-key.
+
+## Fetch Account And Article List
+
+Search account:
+
+```bash
+curl -sS --get 'http://127.0.0.1:3000/api/public/v1/account' \
+  --data-urlencode 'keyword=<MEDIA_NAME>' \
+  --data-urlencode 'begin=0' \
+  --data-urlencode 'size=5'
+```
+
+Fetch/search articles:
+
+```bash
+curl -sS --get 'http://127.0.0.1:3000/api/public/v1/article' \
+  --data-urlencode 'fakeid=<FAKEID>' \
+  --data-urlencode 'begin=0' \
+  --data-urlencode 'size=10' \
+  --data-urlencode 'keyword=<TITLE_OR_TOPIC_KEYWORD>'
+```
+
+Use returned `articles[]` as article candidates. Field mapping:
+
+| Exporter field | Review use |
+|---|---|
+| `title` | `文章标题` and title matching |
+| `link` | `文章链接`, then body download |
+| `cover`/`cover_img` | WeChat cover reference when needed |
+| `digest` | disambiguation hint |
+| `create_time`/`update_time` | `发布时间` fallback |
+| `aid`/`appmsgid` | stable candidate identity |
+| `itemidx` | `发布位置` hint when reliable |
+
+## Fetch Article Body
 
 ```bash
 curl -sS --get 'http://127.0.0.1:3000/api/public/v1/download' \
@@ -106,51 +124,28 @@ curl -sS --get 'http://127.0.0.1:3000/api/public/v1/download' \
 
 In `article.json`, the article HTML body is normally `content_noencode`. Convert it to Markdown when a readable file is useful.
 
-## Read Metrics From Screenshots
-
-Use user-provided WeChat backend screenshots, OCR output, or user-provided metric tables. Map fields as:
-
-- `阅读`/`阅读数` -> `阅读数 R`
-- `点赞`/`点赞数` -> `点赞数 L`
-- `评论`/`评论数` -> `评论数 C`
-- `分享`/`转发`/`转发数` -> `转发数 S`
-- `收藏`/`收藏数` -> `收藏数`
-- `在看`/`在看数` -> `在看数`
-
-If the screenshot omits a metric, leave that field blank. Write `0` only when the screenshot or table explicitly shows zero.
-
 ## Base-First Delivery
 
-For qbit-wechat-review runs, do not generate local delivery files by default. The normal end-to-end path is:
+For review runs, do not generate local delivery files by default. The normal path is:
 
 1. Fetch article JSON/body in memory.
-2. Read metrics from screenshots or user-provided tables.
+2. Read metrics from **用户指标来源**.
 3. Build the Feishu Base payload.
 4. Search by `文章链接` or `文章标题`.
-5. Update the matched record or create a new record.
-6. Upload the readable article Markdown to the record's `附件` field when the field exists.
+5. Update or create the record.
+6. Upload readable article Markdown to `附件` when the field exists.
 
-For same-topic analysis runs:
+For same-topic runs:
 
-1. Parse one topic name plus three links for 量子位, 新智元, and 机器之心.
-2. Fetch body for all three links with the same local WeChat backend, then read metrics from user-provided screenshots or tables.
-3. Upsert the 量子位 article into `文章复盘`.
-4. Upsert 新智元 and 机器之心 articles into `竞品文章池`.
-5. Upsert one `同题分析` row, link the three article records, snapshot metrics, set `同题状态`, and write structured analysis fields.
-6. Do not use `appmsgpublish` for competitor accounts. Competitor articles require user-provided WeChat links in V1.
+1. Parse one topic name plus three links for 量子位, 新智元, 机器之心.
+2. Fetch body for all three with the local backend; read metrics from **用户指标来源**.
+3. Upsert 量子位 article into `文章复盘`.
+4. Upsert 新智元 and 机器之心 into `竞品文章池`.
+5. Upsert one `同题分析` row, link the three records, write structured analysis.
+6. If competitor links are missing, use local account search + article list before web-search fallback.
 
-The Markdown attachment can be a temporary/local intermediate because Base attachment upload requires a local file. Other local files are optional. Only write extra debug files when the user asks for files, when debugging the backend, or when preserving evidence for a failed run. If local files are needed, place them under a descriptive subdirectory in:
+The Markdown attachment can be a temporary local intermediate. Only write extra debug files when the user asks or when preserving evidence for a failed run. Debug file location:
 
 ```text
-/Users/jay/Documents/Lark/exports/wechat-article-test/
+~/Documents/Lark/exports/wechat-article-test/
 ```
-
-Optional debug files:
-
-- `article.json`
-- `article.txt`
-- `article.md`
-- `metrics.json`
-- `metrics.md`
-
-Do not expose sensitive identifiers in these debug files.

@@ -186,6 +186,25 @@ def run_lark(args):
     return extract_json_object(combined)
 
 
+def extract_minute_token(minute_data):
+    for key in ("minute_token", "token", "object_token"):
+        value = minute_data.get(key)
+        if value:
+            return value
+    minute_url = minute_data.get("minute_url") or minute_data.get("url")
+    if not minute_url:
+        return None
+    patterns = [
+        r"/minutes/([A-Za-z0-9_-]+)",
+        r"[?&](?:minute_token|token)=([A-Za-z0-9_-]+)",
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, minute_url)
+        if match:
+            return match.group(1)
+    return None
+
+
 def upload_to_minutes(mp3_path):
     uploaded = run_lark(["drive", "+upload", "--file", str(mp3_path), "--name", mp3_path.name])
     data = uploaded.get("data") or {}
@@ -198,6 +217,7 @@ def upload_to_minutes(mp3_path):
         "file_token": file_token,
         "drive_url": data.get("url"),
         "minute_url": minute_data.get("minute_url"),
+        "minute_token": extract_minute_token(minute_data),
     }
 
 
