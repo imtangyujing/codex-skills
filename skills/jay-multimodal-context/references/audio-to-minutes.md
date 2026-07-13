@@ -24,10 +24,24 @@ If Chrome cookies are unavailable, try the user's active browser cookies, such a
 
 Always add `--no-playlist` when the user provides a single YouTube video URL that contains playlist parameters such as `list=WL` or `index=...`.
 
+When the task only needs metadata, subtitle listing, or subtitle download, add `--ignore-no-formats-error` by default. Some YouTube videos expose usable metadata and automatic captions while yt-dlp still reports `Only images are available for download` or `Requested format is not available` because video/audio format extraction hit the YouTube `n challenge`. In that situation, do not retry a plain metadata command first; keep going with subtitle extraction if captions are listed.
+
+Use this metadata command for caption-first workflows:
+
+```bash
+yt-dlp --cookies-from-browser chrome --no-playlist --skip-download --ignore-no-formats-error --dump-json "<youtube url>" -o '%(id)s.%(ext)s'
+```
+
+Use this subtitle-listing command:
+
+```bash
+yt-dlp --cookies-from-browser chrome --no-playlist --skip-download --ignore-no-formats-error --list-subs "<youtube url>"
+```
+
 Prefer platform captions first:
 
 ```bash
-yt-dlp --cookies-from-browser chrome --no-playlist --skip-download --write-subs --write-auto-subs --sub-langs 'en.*,en,zh.*,zh' --sub-format srt --convert-subs srt -o '%(id)s.%(ext)s' "<youtube url>"
+yt-dlp --cookies-from-browser chrome --no-playlist --skip-download --ignore-no-formats-error --write-subs --write-auto-subs --sub-langs 'en.*,en,zh.*,zh' --sub-format srt --convert-subs srt -o '%(id)s.%(ext)s' "<youtube url>"
 ```
 
 If usable captions are unavailable, download the lowest practical audio track with local browser cookies and continue through Feishu Minutes transcription.

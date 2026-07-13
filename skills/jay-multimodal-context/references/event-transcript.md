@@ -29,7 +29,9 @@ Use these rules for final Markdown created from salon, meetup, panel, workshop, 
 
 - Default pattern: `<organizer>-<event-topic>-<YYYYMMDD>.md`.
 - Use the organizer, host brand, venue brand, community, or publication as the first field. For Qbit events, use `量子位` when it is the organizer or clear host.
-- Use the event theme, series name, session title, or strongest topic label as the second field.
+- Use the event theme, series name, session title, or strongest topic label as source material for the second field, then rewrite it as a short Chinese topic segment instead of copying the full event title.
+- The short topic segment should feel like a restrained, clear, lingering book chapter title. It must be Chinese, 4 to 12 Chinese characters, with no punctuation and no book-title marks.
+- Avoid generic words in the short topic segment: `问题`, `对话`, `思考`, `讨论`, `这个`, `事情`.
 - Use the event date as the date field. If event date is unavailable, use publication date, transcript date, or creation date.
 - Keep guest names out of the filename when the event has multiple speakers. Put guest names in the Markdown body or metadata area instead.
 - If caller-provided metadata already identifies organizer, topic, and date, use it directly without rereading completed Markdown.

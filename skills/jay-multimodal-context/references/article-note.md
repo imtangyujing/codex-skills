@@ -4,7 +4,7 @@
 
 Use this reference when the user provides article text, article links, transcript Markdown, polished transcript Markdown, or first-hand source material and wants an Obsidian-ready note section.
 
-The goal is to extract transferable views, frameworks, judgments, and useful concepts, then place them as the first section of the same Markdown document that contains the source article or transcript. Remove intro storytelling, screenshots, proof-of-reading chatter, token-count anecdotes, platform-specific detours, and other case material from the note section unless a case is required to understand the argument.
+The goal is to turn the source into a clear structured summary, then place it as the first section of the same Markdown document that contains the source article or transcript. Focus on information compression, hierarchy rebuilding, and concise presentation. Do not force subjective judgment, commentary, elevation, or second-hand creation. Remove intro storytelling, screenshots, proof-of-reading chatter, token-count anecdotes, platform-specific detours, and other low-value material from the note section unless a case is required to understand the source content.
 
 ## Inputs
 
@@ -33,38 +33,22 @@ Default shape:
 
 ## 笔记
 
-### 核心观点
+### <source-appropriate heading>
 
-<1-3 paragraphs stating the central thesis.>
+- <compressed point from the source>
+- <compressed point from the source>
 
-### 关键判断
+### <source-appropriate heading>
 
-- <important judgment>
-- <important judgment>
-- <important judgment>
+#### <optional layer or dimension>
 
-### 分层框架
+- <compressed point from the source>
+- <compressed point from the source>
 
-#### <framework layer or dimension>
+#### <optional layer or dimension>
 
-<compressed explanation>
-
-#### <framework layer or dimension>
-
-<compressed explanation>
-
-### 金句
-
-> 原文摘句。
-
-> 原文摘句。
-
-> 原文摘句。
-
-### 延伸思考
-
-- <question or implication worth keeping>
-- <question or implication worth keeping>
+- <compressed point from the source>
+- <compressed point from the source>
 
 ## 原文
 
@@ -84,20 +68,21 @@ Use these routes before writing:
 
 ## Note Section Shape
 
-Use `## 笔记` as the default section heading unless the user asks for another heading. Inside it, use these subsections when the material supports them: `### 核心观点`, `### 关键判断`, `### 分层框架`, `### 金句`, and `### 延伸思考`. Omit empty subsections.
+Use `## 笔记` as the default section heading unless the user asks for another heading. Inside it, organize the source with flexible `###` and optional `####` headings that fit the material itself. Do not require fixed subsections. Do not force dedicated judgment, excerpt, reflection, or takeaway modules.
 
 ## Writing Rules
 
-- Extract the source's观点,框架,判断,方法,推论.
-- Remove story intros, personal setup, screenshots, image captions, defensive caveats, repeated examples, and long source-specific chronology.
-- Keep examples only when they make an abstract idea easier to reuse.
+- Summarize and reorganize the source content into clearer hierarchy, shorter expression, and reusable reading notes.
+- Preserve the source's main topics, facts, numbers, chronology, categories, methods, examples, and relationships when they are important.
+- Remove story intros, personal setup, screenshots, image captions, defensive caveats, repeated examples, and long source-specific chronology when they do not carry information.
+- Keep examples only when they make the source content easier to understand or reuse.
 - Do not summarize paragraph by paragraph.
+- Do not force subjective judgment, value ranking, commentary, reflection, or extrapolated implications.
 - Do not produce a media article rewrite.
 - Do not polish or rewrite source content in the article route, existing transcript route, or direct first-hand note route. Only add the note section unless the user explicitly asks for source cleanup.
 - Do not add invented facts, extra citations, or outside claims unless the user asks for research.
 - Keep the writing dense, clean, and suitable for later retrieval in Obsidian.
 - Prefer short sections and bullets where the idea is naturally list-shaped.
-- In `## 金句`,use standalone Markdown blockquotes. Keep only short source excerpts that are worth reusing; do not wrap them in list bullets,commentary,or paraphrase.
 - Preserve useful terms such asPrompt Engineering,Harness Engineering,Agent,SOP,AI when they are core concepts.
 - Follow any standing user style constraints in the active thread, including forbidden sentence patterns and spacing rules.
 
@@ -112,9 +97,9 @@ Use `## 笔记` as the default section heading unless the user asks for another 
 ## Text Handling SOP
 
 1. Treat the pasted text as the source of truth.
-2. Identify the thesis, supporting judgments, and reusable framework.
-3. Remove anecdotal setup unless it carries a reusable insight.
-4. Convert the reusable ideas into the Note Section Shape and insert them at the top of the same Markdown document.
+2. Identify the source's main topics, information hierarchy, important facts, categories, process, and examples.
+3. Remove anecdotal setup unless it carries important information.
+4. Convert the source content into the Note Section Shape and insert it at the top of the same Markdown document.
 5. Choose a concise filename that names the article or its core idea.
 
 ## Existing Markdown SOP
@@ -131,7 +116,7 @@ Use this SOP when the caller says the Markdown is already polished:
 
 1. Read only the provided polished Markdown file and this reference.
 2. Confirm the file has polished transcript prose below the title. If it starts with a top-level title, keep that title as the first line.
-3. Build the note from the polished transcript body, focusing on reusable观点,框架,判断,方法,推论.
+3. Build the note from the polished transcript body, focusing on structured summary, information compression, and clear hierarchy.
 4. Insert or replace `## 笔记` immediately below the title.
 5. Preserve the full polished transcript below the note section, including existing speaker labels and headings.
 6. Edit the same Markdown path in place unless the caller provides a separate final output path.
@@ -150,9 +135,11 @@ Choose the folder by the note's primary future use. When the note can fit both, 
 
 ## Filename Rules
 
-- Default pattern for article and note-entry files: `<author-or-source>-<original-title>-<YYYYMMDD>.md`.
+- Default pattern for article and note-entry files: `<author-or-source>-<short-title>-<YYYYMMDD>.md`.
 - Use the article author as the first field. If the author is unavailable, use the media account, newsletter name, publication, company, or source site.
-- Use the original title as the second field. If the title is vague or missing, write a short Chinese title that captures the core idea.
+- Use the original title as source material for the second field, then rewrite it as a short Chinese title segment. If the title is vague or missing, write a short Chinese title that captures the core idea.
+- The short title segment should feel like a restrained, clear, lingering book chapter title. It must be Chinese, 4 to 12 Chinese characters, with no punctuation and no book-title marks.
+- Avoid generic words in the short title segment: `问题`, `对话`, `思考`, `讨论`, `这个`, `事情`.
 - Use the publication date as the date field. If publication date is unavailable, use the fetch or creation date.
 - Keep note-entry work as one merged Markdown document. Do not create a folder package unless the user explicitly asks for one.
 - Remove characters that are unsafe or awkward in filenames.
@@ -165,6 +152,6 @@ Before reporting completion:
 
 - Confirm the merged Markdown file exists.
 - Confirm the file starts with the document title, then the `## 笔记` section before source content.
-- Confirm the note section contains the core idea, not a narrative recap.
+- Confirm the note section is a structured, concise summary of the source content, not commentary, reflection, or a narrative recap.
 - Confirm the file is under the routed folder unless the user selected an existing file or explicitly requested another path.
 - Confirm obvious boilerplate and intro story material have been removed.

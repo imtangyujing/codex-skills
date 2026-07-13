@@ -29,6 +29,20 @@ Resolve all relative paths from the directory containing this `SKILL.md`.
 - Route every final Markdown output through the Global Obsidian Path Router unless the user gives an explicit absolute output path.
 - For podcast, video, and audio final Markdown, follow `references/interview-polish.md` final packaging and filename rules.
 
+## Local Markdown Persistence Cleanup
+
+Apply this mechanical cleanup immediately before writing any final or source-preserving local `.md` file created by this skill, including fetched Feishu Docx Markdown, article Markdown, transcript-derived Markdown, and routed Obsidian Markdown.
+
+Cleanup rules:
+
+- Trim trailing spaces and tabs on normal text lines.
+- Collapse any run of 3 or more blank lines into exactly one blank line.
+- Preserve content order, headings, lists, blockquotes, links, tables, image Markdown, escaped Markdown characters, and source wording.
+- Do not merge adjacent non-empty lines, rewrite prose, summarize content, or remove media/source links.
+- Do not apply this cleanup inside fenced code blocks.
+- Skip this cleanup when the user explicitly asks for byte-for-byte or spacing-exact preservation.
+- Do not use the cleaned local Markdown as a matching source for Feishu `docs +update` or other exact remote edit operations. Keep the raw fetched content for exact matching workflows.
+
 ## Global Obsidian Path Router
 
 Run this step for every final Markdown output. For note tasks, route the merged Markdown document through this step unless editing an existing user-selected Markdown file in place.

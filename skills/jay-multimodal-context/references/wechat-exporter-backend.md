@@ -64,6 +64,20 @@ curl -sS --get 'http://127.0.0.1:3000/api/public/v1/download' \
 
 In JSON output, the original article HTML is usually in `content_noencode`. The exporter may also return fields such as `title`, `author`, and publication metadata.
 
+## Conservative Markdown Cleanup
+
+After fetching WeChat Markdown, apply a conservative mechanical cleanup before routing the article into downstream note or source-material workflows.
+
+Cleanup goals:
+
+- Remove clear WeChat shell noise, including leading CSS blocks, immersive-reader prompts, novel-reader prompts, and standalone UI lines such as `在小说阅读器读本章`, `去阅读`, and `在小说阅读器中沉浸阅读`.
+- Collapse excessive blank lines: replace any run of 3 or more blank lines with exactly one blank line.
+- Trim trailing spaces on every line.
+- Keep original title, author/source metadata, headings, body text, image Markdown, links, blockquotes, and tables.
+- Keep intentional short paragraphing. Do not merge adjacent non-empty text lines, rewrite prose, remove image links, or summarize content.
+
+Use these rules only when the removed content is clearly page chrome or empty spacing. If a line may be article body, keep it.
+
 ## Routing Rules
 
 - For ordinary article-note tasks, pass the fetched text or Markdown into `references/article-note.md`.
