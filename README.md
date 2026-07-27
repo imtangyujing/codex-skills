@@ -8,6 +8,8 @@ Repository: <https://github.com/imtangyujing/codex-skills>
 
 - `skills/`: personal skill folders to sync across machines.
 - `install.sh`: links every folder in `skills/` into `${CODEX_HOME:-$HOME/.codex}/skills`.
+- `install-kimi.sh`: links every folder in `skills/` into Kimi Work's local skills directory (`~/Library/Application Support/kimi-desktop/daimon-share/daimon/skills`), and prunes links whose source folder was deleted from this repo.
+- `sync-kimi-launchd.sh`: launchd wrapper for `install-kimi.sh`; silent when nothing changed, sends a macOS notification when skills were linked/removed/backed up.
 
 Do not put Codex-managed system folders here, such as `.system` or `codex-primary-runtime`.
 
@@ -265,4 +267,44 @@ Create or copy the skill into `skills/<skill-name>`, then run:
 git add skills/<skill-name>
 git commit -m "Add <skill-name> skill"
 git push
+```
+
+## Kimi Work Sync
+
+`./install-kimi.sh` links every folder in `skills/` into Kimi Work's local
+skills directory:
+
+```bash
+~/Library/Application Support/kimi-desktop/daimon-share/daimon/skills
+```
+
+Behavior mirrors `install.sh` (back up same-name local skills before linking),
+plus it removes links whose source folder was deleted from this repo. Only
+links pointing into this repo are ever touched.
+
+### Automatic Sync With launchd (macOS)
+
+A LaunchAgent runs `sync-kimi-launchd.sh` every 5 minutes and on login. The
+wrapper is silent when nothing changed and posts a macOS notification listing
+any linked/removed/backed-up skills. Logs live in
+`~/Library/Logs/kimi-skills-sync/`.
+
+Setup on a new Mac:
+
+```bash
+./install-kimi.sh   # one-time, creates the links
+cp launchd/local.kimi-skills-sync.plist ~/Library/LaunchAgents/
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/local.kimi-skills-sync.plist
+```
+
+Because this repo lives in iCloud Drive, launchd needs permission to read it:
+grant `/bin/bash` Full Disk Access once in System Settings → Privacy &
+Security → Full Disk Access (press `Cmd+Shift+G` in the file picker and enter
+`/bin/bash`). Without this, the job fails with "Operation not permitted".
+
+Manage the job:
+
+```bash
+launchctl kickstart gui/$(id -u)/local.kimi-skills-sync   # run once now
+launchctl bootout gui/$(id -u)/local.kimi-skills-sync     # unload
 ```
