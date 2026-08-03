@@ -1,0 +1,45 @@
+#!/bin/bash
+# Sync All Skills — 双击运行，一键同步 Codex + Kimi
+
+osascript <<'EOF'
+-- 确认对话框
+set userChoice to display dialog "确认同步所有 Skills?" & return & return & "Codex: 修复软链接" & return & "Kimi:  rsync 单向同步" buttons {"取消", "同步"} default button "同步" with icon note
+
+if button returned of userChoice is "同步" then
+    set icloudPath to POSIX path of (path to home folder as string) & "Library/Mobile Documents/com~apple~CloudDocs/Skills"
+    set syncScript to icloudPath & "/sync-all-skills.sh"
+
+    try
+        set syncOutput to do shell script "cd " & quoted form of icloudPath & " && bash " & quoted form of syncScript & " 2>&1"
+
+        -- 解析 Codex 结果
+        set codexLinked to "0"
+        set codexUpdated to "0"
+        set codexPruned to "0"
+        set codexSkipped to "0"
+
+        -- 解析 Kimi 结果
+        set kimiChanged to "0"
+        set kimiNew to "0"
+
+        set outputLines to paragraphs of syncOutput
+        repeat with aLine in outputLines
+            if aLine starts with "codex_linked=" then set codexLinked to text 14 thru -1 of aLine
+            if aLine starts with "codex_updated=" then set codexUpdated to text 15 thru -1 of aLine
+            if aLine starts with "codex_pruned=" then set codexPruned to text 14 thru -1 of aLine
+            if aLine starts with "codex_skipped=" then set codexSkipped to text 15 thru -1 of aLine
+            if aLine starts with "kimi_changed=" then set kimiChanged to text 14 thru -1 of aLine
+            if aLine starts with "kimi_new=" then set kimiNew to text 10 thru -1 of aLine
+        end repeat
+
+        -- 构建通知文本
+        set codexMsg to "Codex: +" & codexLinked & " 更新" & codexUpdated & " 清理" & codexPruned
+        set kimiMsg to "Kimi: 变更" & kimiChanged & " 新增" & kimiNew
+
+        display notification codexMsg & " | " & kimiMsg with title "✅ Skills 同步完成" sound name "Glass"
+
+    on error errMsg
+        display notification errMsg with title "❌ 同步失败" sound name "Basso"
+    end try
+end if
+EOF

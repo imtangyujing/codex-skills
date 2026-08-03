@@ -11,7 +11,7 @@ Run `scripts/feishu_outline_to_word.py` for the whole operation. The script:
 3. Merges the exported body into the local Qbit template.
 4. Removes Feishu AI-generated content disclaimer paragraphs such as `内容由AI生成，请谨慎参考`.
 5. Forces the first non-empty banner title paragraph to be centered.
-6. Saves the finished `.docx` to `~/Downloads` by default.
+6. Saves the finished `.docx` to the current working directory by default.
 
 Run from any working directory:
 
@@ -22,7 +22,7 @@ python3 "/Users/jay/Library/Mobile Documents/com~apple~CloudDocs/Skills/skills/q
 ## Defaults
 
 - Template: `assets/qbit-template.docx` inside this skill directory.
-- Output folder: `~/Downloads`.
+- Output folder: the current working directory where the script is invoked.
 - Output filename: Feishu document title plus `.docx`.
 - Identity: `--as user`.
 
@@ -36,6 +36,6 @@ python3 "/Users/jay/Library/Mobile Documents/com~apple~CloudDocs/Skills/skills/q
 
 ## Validation
 
-After running, verify the script JSON says `"ok": true` and the output path is under `~/Downloads` unless the user requested another folder.
+After running, verify the script JSON says `"ok": true` and the output path is under the invocation working directory unless the user requested another folder.
 
 If `lark-cli` reports a newer version in `_notice.update`, finish the requested export first, then mention the available update briefly.

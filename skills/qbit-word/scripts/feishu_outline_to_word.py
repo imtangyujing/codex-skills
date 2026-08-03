@@ -45,7 +45,7 @@ RELATIONSHIP_ATTRS = {R_ID, R_EMBED, R_LINK}
 
 SKILL_DIR = Path(__file__).resolve().parents[1]
 DEFAULT_TEMPLATE = SKILL_DIR / "assets/qbit-template.docx"
-DEFAULT_OUTPUT_DIR = Path.home() / "Downloads"
+DEFAULT_OUTPUT_DIR = Path.cwd()
 
 
 def run_json(argv: list[str], cwd: Path | None = None) -> dict:

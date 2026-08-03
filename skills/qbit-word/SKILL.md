@@ -1,6 +1,6 @@
 ---
 name: qbit-word
-description: "Qbit document conversion router for Feishu/Lark and Word workflows. Use when the user asks to export a confirmed Feishu/Lark outline to the Qbit Word template, convert/download a Feishu document as Word, rename a Word output from a Feishu title, save Qbit .docx files to Downloads, or import a local Markdown draft into a real Feishu docx document while preserving Qbit article line breaks and rendering Markdown-linked images/videos as real media blocks."
+description: "Qbit document conversion router for Feishu/Lark and Word workflows. Use when the user asks to export a confirmed Feishu/Lark outline to the Qbit Word template, convert/download a Feishu document as Word, rename a Word output from a Feishu title, save Qbit .docx files to the current project directory, or import a local Markdown draft into a real Feishu docx document while preserving Qbit article line breaks and rendering Markdown-linked images/videos as real media blocks."
 ---
 
 # Qbit Word Router

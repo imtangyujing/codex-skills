@@ -77,6 +77,8 @@ curl -sS --get 'http://127.0.0.1:3000/api/public/v1/download' \
 
 In JSON output, the original article HTML is usually in `content_noencode`. The exporter may also return fields such as `title`, `author`, and publication metadata.
 
+Before choosing the final filename,apply the `Final Filename Contract` in `references/article-note.md`. When exporter Markdown or JSON does not expose a publication date,fetch the original WeChat URL as untouched raw HTML and retain it in the working directory so the contract can inspect the page-script time. Normalized exporter HTML and Markdown may omit the script that fills `#publish_time`.
+
 ## Conservative Markdown Cleanup
 
 After fetching WeChat Markdown, apply a conservative mechanical cleanup before routing the article into downstream note or source-material workflows.

@@ -15,7 +15,7 @@ description: |
 根据稿件类型和用户当前阶段，路由到对应子 skill：
 
 - 选题发散：`skills/topic-selection/SKILL.md`
-- 普通长文：`skills/jay-writer/SKILL.md`
+- 普通长文：`../../jay-writer/SKILL.md`
 - 技术解读：`skills/tech-blog-writer/SKILL.md`
 - 商稿正文：`skills/commercial-article/SKILL.md`
 - 商稿提纲：`skills/commercial-outline/SKILL.md`

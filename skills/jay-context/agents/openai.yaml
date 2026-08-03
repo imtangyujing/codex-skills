@@ -1,0 +1,4 @@
+interface:
+  display_name: "Jay-Context"
+  short_description: "Process one or many sources end to end"
+  default_prompt: "Use $jay-context to process these article, audio, video, or transcript sources end to end."

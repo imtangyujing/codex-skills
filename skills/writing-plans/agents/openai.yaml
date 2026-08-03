@@ -1,4 +1,0 @@
-interface:
-  display_name: "Writing Plans"
-  short_description: "Start implementation directly from an approved design"
-  default_prompt: "Use $writing-plans to begin implementation from the approved design without creating another plan."
